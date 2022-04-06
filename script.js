@@ -1,7 +1,7 @@
 "use strict";
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
-let score = 20;
+let score = 10;
 let highscore = 0;
 
 const displayMessage = function (message) {
@@ -13,15 +13,18 @@ document.querySelector(".check").addEventListener("click", function () {
 
   // When there is no input
   if (!guess) {
-    displayMessage("⛔️ No number!");
+    displayMessage("⛔️ Insert a number!");
 
     // When guess is correct
   } else if (guess === secretNumber) {
     displayMessage("🎉 Correct Number!");
     document.querySelector(".number").textContent = secretNumber;
+    document.querySelector(".guess").value = "";
 
     document.querySelector("body").style.backgroundColor = "#60b347";
     document.querySelector(".number").style.width = "30rem";
+
+    document.querySelector(".guess").disabled = true;
 
     // Set personal best
     if (score > highscore) {
@@ -43,7 +46,7 @@ document.querySelector(".check").addEventListener("click", function () {
 });
 
 document.querySelector(".again").addEventListener("click", function () {
-  score = 20;
+  score = 10;
   secretNumber = Math.trunc(Math.random() * 20) + 1;
 
   displayMessage("Start guessing...");
@@ -53,12 +56,16 @@ document.querySelector(".again").addEventListener("click", function () {
 
   document.querySelector("body").style.backgroundColor = "#222";
   document.querySelector(".number").style.width = "15rem";
+
+  document.querySelector(".guess").disabled = false;
 });
 
 // Allow eneter key to submit your number
-document.getElementById("guess").addEventListener("keyup", function (event) {
-  if (event.code === "Enter") {
-    event.preventDefault();
-    document.getElementById("abc").click();
-  }
-});
+document
+  .getElementById("guess enter")
+  .addEventListener("keyup", function (event) {
+    if (event.code === "Enter") {
+      event.preventDefault();
+      document.getElementById("btn check enter").click();
+    }
+  });
